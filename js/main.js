@@ -79,7 +79,7 @@ async function findCountry(country) {
     if (response.status === 404) {
         $('.info').innerHTML = "<h1 class='text-center w-100 mb-5'>Please enter the name of country</h1>"
     } else {
-        $('.info').innerHTML = `<h1 class='text-center w-100 mb-5'>Qidiruv natijasi:${data.length}</h1>`;
+        $('.info').innerHTML = `<h1 class='text-center w-100 mb-5'>Countries found: ${data.length}</h1>`;
         dataRender(data)
     }
 }
@@ -102,7 +102,7 @@ async function sortCountry(region) {
             $('.info').innerHTML = "<h1 class='text-center w-100'>Please enter the name of country</h1>"
         } else {
 
-            $('.info').innerHTML = `<h1 class='text-center w-100 mb-5'>Qidiruv natijasi:${data.length}</h1>`;
+            $('.info').innerHTML = `<h1 class='text-center w-100 mb-5'>Countries found: ${data.length}</h1>`;
             dataRender(data)
         }
     } else {
@@ -113,7 +113,7 @@ async function sortCountry(region) {
         if (response.status === 404) {
             $('.info').innerHTML = "<h1 class='text-center w-100'>Please enter the name of country</h1>"
         } else {
-            $('.info').innerHTML = `<h1 class='text-center w-100 mb-5'>Qidiruv natijasi:${data.length}</h1>`;
+            $('.info').innerHTML = `<h1 class='text-center w-100 mb-5'>Countries found: ${data.length}</h1>`;
             dataRender(data)
         }
     }
