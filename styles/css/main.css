@@ -26,21 +26,97 @@ option {
   margin: 0 auto;
   max-width: 1210px;
   padding: 0 50px;
-}/*# sourceMappingURL=main.css.map */
+}
 
+/*# sourceMappingURL=main.css.map */
+
+
+body {
+  overflow-x: hidden !important;
+}
 
 .wrapper {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill , minmax(264px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
   gap: 75px;
 }
 
-.card{
-  max-height: 336px;
+.card {
+  max-height: 400px;
 }
 
-.card-top-img{
+.card-top-img {
   height: 160px;
-  min-width: 267px !important; 
+  min-width: 267px !important;
+}
+
+.sidebar {
+  width: 91%;
+  min-height: 100vh;
+  position: fixed;
+  z-index: 22;
+  background-color: rgba(184, 184, 184, 0.677);
+  top: 0;
+  right: 0;
+  backdrop-filter: blur(28px);
+  transition: all 0.3s ease-in-out;
+}
+
+.swipe {
+  transform: translateX(200%);
+  transition: all 0.3s ease-in-out;
+}
+
+.close {
+  padding: 10px 15px !important;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 1s linear infinite;
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  animation: prixClipFix 2s linear infinite;
+}
+
+.loader::after {
+  transform: rotate3d(90, 90, 0, 180deg);
+  border-color: #ff3d00;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+
+  75%,
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
 }

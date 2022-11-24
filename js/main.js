@@ -1,7 +1,7 @@
 "use strict";
 const baseURL = "https://restcountries.com/v2";
 
-// -------------- ALL COUNTRIES --------------------------- //
+// ------------------ ALL COUNTRIES --------------------------- //
 const getAllCountries = async () => {
     const countries = await fetch(`${baseURL}/all`);
     const result = await countries.json();
@@ -11,11 +11,11 @@ const getAllCountries = async () => {
 
 getAllCountries()
 
-// -------------- ALL COUNTRIES END --------------------------- //
+// ------------------- ALL COUNTRIES END ----------------------- //
 
 
 
-// ------------ RENDER ALL DATA ----------------------- //
+// ------------------- RENDER ALL DATA ----------------------- //
 
 function dataRender(data = []) {
 
@@ -30,6 +30,7 @@ function dataRender(data = []) {
         <li class="card-list-item list-unstyled"><strong>Region: </strong> ${el.region} </li>
         <li class="card-list-item list-unstyled"><strong>Capital: </strong> ${el.capital} </li>
         </ul>
+        <button class="btn btn-primary mt-4" data-id="${el.name}">READ MORE . . .</button>
         </div>`);
 
         $(".wrapper").appendChild(card);
@@ -64,7 +65,12 @@ function dynamicCategory(data) {
 
 $("#search").addEventListener('keypress', (e) => {
     if (e.target.value.trim().length !== 0 && e.keyCode === 13) {
-        findCountry(e.target.value);
+        $('.wrapper').innerHTML = `<span class="loader"></span>`;
+        setTimeout(() => {
+            $('.wrapper').innerHTML = "";
+            findCountry(e.target.value);
+        }, 1500)
+
     }
 })
 
@@ -87,7 +93,12 @@ async function findCountry(country) {
 // ------------------- FIND COUNTRIES END ------------------- //
 
 $('#region').addEventListener('change', (e) => {
-    sortCountry(e.target.value.toLowerCase())
+    $('.wrapper').innerHTML = `<span class="loader"></span>`;
+
+    setTimeout(() => {
+        $('.wrapper').innerHTML = ""
+        sortCountry(e.target.value.toLowerCase())
+    }, 1500)
 })
 
 
@@ -118,3 +129,61 @@ async function sortCountry(region) {
         }
     }
 }
+
+
+$('.wrapper').addEventListener('click', (e) => {
+    $('.country-info').innerHTML = "";
+    
+    if (e.target.classList.contains('btn-primary')) {
+        let id = e.target.getAttribute('data-id');
+        getCountry(id);
+        $('.sidebar').classList.remove('swipe')
+        $('body').style.overflow = `hidden`;
+    }
+})
+
+
+async function getCountry(country) {
+
+    const response = await fetch(`${baseURL}/name/${country}`);
+    const result = await response.json();
+
+    const {
+        name,
+        capital,
+        region,
+        population,
+        area,
+        timezones,
+        flags: {
+            svg
+        }
+    } = result[0];
+
+    const row = createElement('div', 'row', `
+    
+    <div class="col-md-4 p-3">
+       <img src="${svg}" alt="rasm" id="img-country" width="320">
+    </div>
+    <div class="col-md-7 p-3">
+       <ul class="list-group">
+          <li class="list-group-item" id="cName">Country: ${name}</li>
+          <li class="list-group-item">Capital: ${capital}</li>
+          <li class="list-group-item">Area: ${area}</li>
+          <li class="list-group-item">Population: ${population}</li>
+          <li class="list-group-item">Region: ${region}</li>
+          <li class="list-group-item">Timezone: ${timezones}</li>   
+       </ul>
+    </div>`);
+
+    $('.country-info').appendChild(row);
+}
+
+$('.close').addEventListener('click', () => {
+    $('.sidebar').classList.add('swipe')
+    $('body').style.overflow = `visible`;
+})
+
+
+
+
