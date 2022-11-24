@@ -5,7 +5,12 @@ const baseURL = "https://restcountries.com/v2";
 const getAllCountries = async () => {
     const countries = await fetch(`${baseURL}/all`);
     const result = await countries.json();
-    dataRender(result)
+
+    setTimeout(() => {
+        $('.wrapper').innerHTML = ""
+        dataRender(result)
+    }, 2000);
+    $('.wrapper').innerHTML = `<span class="loader"></span>`;
     dynamicCategory(result)
 }
 
@@ -30,7 +35,7 @@ function dataRender(data = []) {
         <li class="card-list-item list-unstyled"><strong>Region: </strong> ${el.region} </li>
         <li class="card-list-item list-unstyled"><strong>Capital: </strong> ${el.capital} </li>
         </ul>
-        <button class="btn btn-primary mt-4" data-id="${el.name}">READ MORE . . .</button>
+        <button class="btn btn-primary mt-4 read-more" data-id="${el.name}">READ MORE . . .</button>
         </div>`);
 
         $(".wrapper").appendChild(card);
@@ -133,7 +138,6 @@ async function sortCountry(region) {
 
 $('.wrapper').addEventListener('click', (e) => {
     $('.country-info').innerHTML = "";
-    
     if (e.target.classList.contains('btn-primary')) {
         let id = e.target.getAttribute('data-id');
         getCountry(id);
@@ -183,7 +187,3 @@ $('.close').addEventListener('click', () => {
     $('.sidebar').classList.add('swipe')
     $('body').style.overflow = `visible`;
 })
-
-
-
-
