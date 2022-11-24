@@ -10,7 +10,7 @@ const getAllCountries = async () => {
         $('.wrapper').innerHTML = ""
         dataRender(result)
     }, 2000);
-    $('.wrapper').innerHTML = `<span class="loader"></span>`;
+    $('.loading-box').innerHTML = `<span class="loader"></span>`;
     dynamicCategory(result)
 }
 
@@ -70,7 +70,7 @@ function dynamicCategory(data) {
 
 $("#search").addEventListener('keypress', (e) => {
     if (e.target.value.trim().length !== 0 && e.keyCode === 13) {
-        $('.wrapper').innerHTML = `<span class="loader"></span>`;
+        $('.loading-box').innerHTML = `<span class="loader"></span>`;
         setTimeout(() => {
             $('.wrapper').innerHTML = "";
             findCountry(e.target.value);
@@ -98,7 +98,7 @@ async function findCountry(country) {
 // ------------------- FIND COUNTRIES END ------------------- //
 
 $('#region').addEventListener('change', (e) => {
-    $('.wrapper').innerHTML = `<span class="loader"></span>`;
+    $('.loading-box').innerHTML = `<span class="loader"></span>`;
 
     setTimeout(() => {
         $('.wrapper').innerHTML = ""
